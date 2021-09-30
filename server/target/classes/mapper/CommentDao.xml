@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qks.photoShare.dao.CommentDao">
+
+    <insert id="addComment">
+        insert into comment(id, post_id, user_id, content, date)
+        values(#{id}, #{postId}, #{userId}, #{content}, #{date})
+    </insert>
+
+    <select id="getCommentListByPostId" resultType="com.qks.photoShare.entity.Comment">
+        select *
+        from comment
+        where id = #{postId}
+    </select>
+
+    <delete id="deleteCommentByCommentId">
+        delete from comment
+        where id = #{commentId}
+    </delete>
+</mapper>

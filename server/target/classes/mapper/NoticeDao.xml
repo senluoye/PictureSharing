@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qks.photoShare.dao.NoticeDao">
+
+    <select id="getAllNoticeByReceiverId" resultType="com.qks.photoShare.entity.Notice">
+        select *
+        from notice
+        where receiver = #{receiver}
+    </select>
+
+    <select id="getNoticeById" resultType="com.qks.photoShare.entity.Notice">
+        select *
+        from notice
+        where post_id = #{id}
+    </select>
+
+    <update id="changeReadById">
+        update notice
+        set `read` = 1
+        where id = #{id}
+    </update>
+
+    <insert id="addNotice">
+        insert into notice (id, sender, content, post_id, `read`, date, receiver)
+        values (#{id}, #{sender}, #{content}, #{postId}, #{read}, #{date}, #{receiver});
+    </insert>
+</mapper>

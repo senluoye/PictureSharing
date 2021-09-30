@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qks.photoShare.dao.SoftwareDao">
+<!--    resultType返回的是一个统一的Software对象，没有select的会自动赋初始值，前端对相应的信息处理即可-->
+<!--    <select id="getSoftwaresOnWindows" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and software_windows = 1-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwaresOnMac" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and software_macos = 1-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwaresOnAndroid" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and software_android = 1-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwaresOniOS" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and software_ios = 1-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwaresOnMobile" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and (software_ios = 1 or software_android = 1)-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwaresOnLinux" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and software_linux = 1-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwaresMadeInChina" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and software_mic = 1-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwaresMemberRecharge" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and software_name like '%会员%'-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getDiscountSoftwares" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and price_value!=price_discount-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getRecommendSoftwares" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select software_id,software_name,software_picurl,min(price_value) as software_price,min(price_discount) as software_discount-->
+<!--        from tbl_softwares, tbl_price-->
+<!--        where software_id=price_software and software_recommend = 1-->
+<!--        group by software_id-->
+<!--        order by software_id desc-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwareDetail" resultType="com.starock.lizhishop.entity.Software">-->
+<!--        select *-->
+<!--        from tbl_softwares-->
+<!--        where software_id = #{software_id}-->
+<!--    </select>-->
+
+<!--    <select id="getSoftwarePrice" resultType="com.starock.lizhishop.entity.Price">-->
+<!--        select *-->
+<!--        from tbl_price-->
+<!--        where price_software = #{software_id}-->
+<!--    </select>-->
+
+<!--    <select id="getShoppingCart" resultType="com.starock.lizhishop.entity.Cart">-->
+<!--        select *-->
+<!--        from tbl_carts-->
+<!--        where cart_user = #{cart_user}-->
+<!--        order by cart_id desc-->
+<!--    </select>-->
+
+<!--    <update id="changeQuantity" parameterType="com.starock.lizhishop.entity.Cart">-->
+<!--        update tbl_carts-->
+<!--        <set>-->
+<!--            cart_count=#{cart_count}-->
+<!--        </set>-->
+<!--        where cart_id = #{cart_id}-->
+<!--    </update>-->
+
+<!--    <select id="ifExists" resultType="com.starock.lizhishop.entity.Cart">-->
+<!--        select *-->
+<!--        from tbl_carts-->
+<!--        where cart_software=#{cart_software} and cart_period=#{cart_period}-->
+<!--    </select>-->
+
+<!--    <delete id="deleteFromCart">-->
+<!--        delete from tbl_carts-->
+<!--        where cart_id=#{cart_id}-->
+<!--    </delete>-->
+
+<!--    <insert id="addToCart" useGeneratedKeys="true" keyColumn="cart_id" keyProperty="cart_id"-->
+<!--            parameterType="com.starock.lizhishop.entity.Cart">-->
+<!--        insert into tbl_carts(cart_software, cart_softwarename,cart_price, cart_count, cart_period, cart_picurl)-->
+<!--        values(#{cart_software}, #{cart_softwarename},#{cart_price},#{cart_count},#{cart_period},#{cart_picurl})-->
+<!--    </insert>-->
+
+<!--    <insert id="addToUser" parameterType="com.starock.lizhishop.entity.User">-->
+<!--        insert into tbl_users(username, password, email)-->
+<!--        values(#{username}, #{password},#{email})-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash;    #{}大概是表示这是传入的参数的意思&ndash;&gt;-->
+<!--    <select id="isRegister" resultType="com.starock.lizhishop.entity.User">-->
+<!--        select *-->
+<!--        from tbl_users-->
+<!--        where id=#{id}-->
+<!--    </select>-->
+</mapper>
