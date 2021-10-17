@@ -87,7 +87,7 @@ public class PostController {
             System.out.println("userId:" + userId);
 
             String content = map.get("content").toString();
-            String pictures = "/api/picture/" + map.get("pictures").toString();
+            String pictures = map.get("pictures").toString();
             long date = new Date().getTime();
 
             if (postService.addPost(id, userId, content, pictures, date)) {

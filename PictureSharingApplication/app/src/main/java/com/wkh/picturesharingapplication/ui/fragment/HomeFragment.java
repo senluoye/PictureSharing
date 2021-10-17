@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wkh.picturesharingapplication.R;
-import com.wkh.picturesharingapplication.adepter.RVAdapter;
+import com.wkh.picturesharingapplication.adepter.PostAdapter;
 import com.wkh.picturesharingapplication.bean.model.post.getAllPostModel;
 import com.wkh.picturesharingapplication.databinding.FragmentHomeBinding;
 import com.wkh.picturesharingapplication.http.RetrofitRequest;
@@ -39,12 +39,9 @@ public class HomeFragment extends Fragment{
 
     private View rootView;//home视图
 
-    String url = "http://192.168.244.1:18080";
     String token = "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaTIzNDJuYXMiLCJpZCI6ImYyOWYyMjY0LTg0YTEtNDBmOS1hNGRlLTg1NTIxZGQwZTQ5MyIsImlhdCI6MTYzNDM3ODM4M30.nEpR7elezBvgEHjOY_dXs0mzj1WN2HX5WXw-GEdCkNg";
-    RVAdapter mAdapter;
+    PostAdapter mAdapter;
     Retrofit mRetrofit;
-    GridLayoutManager mGridLayoutManager;
-    RecyclerView mRecyclerView;
     static final int SUCCESS = 0;
     static final int FAILURE = 1;
     static final int EXCEPTION = 2;
@@ -89,28 +86,25 @@ public class HomeFragment extends Fragment{
     //初始化布局
     private void initView() {
 
-        mBinding.rv.setLayoutManager(
-                new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(
+                getActivity(), 2);
 
-        mBinding.rv.setLayoutManager(
-                new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false));
+
+        mBinding.rv.setLayoutManager(gridLayoutManager);
 
         mBinding.rv.addItemDecoration(new RVItemDecoration());
-        mBinding.btnGet.setOnClickListener(v -> {
-            dataOnUI.clear();
-            GETConnectSynchronous();
-        });
 
         // 创建适配器
-        mAdapter = new RVAdapter(getActivity(), dataOnUI);
+        mAdapter = new PostAdapter(getActivity(), dataOnUI);
         mBinding.rv.setAdapter(mAdapter);
 
         // 初始化Retrofit
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(url) // 设置网络请求的域名
+                .baseUrl(getActivity().getString(R.string.url))
                 .addConverterFactory(GsonConverterFactory.create()) // 设置数据解析器（Gson）
                 .build();
 
+        GETConnectSynchronous();
     }
 
     void GETConnectSynchronous() {

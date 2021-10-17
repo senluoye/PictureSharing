@@ -16,22 +16,22 @@ import com.wkh.picturesharingapplication.databinding.LayoutRecyclerViewItemBindi
 
 import java.util.List;
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 {
     LayoutRecyclerViewItemBinding mBinding;
 
     Context context;
     List<getAllPostModel.DataDTO> data;
-    String url = "http://192.168.244.1:18080";
+    String url = "http://10.33.25.42:18080";
 
-    public RVAdapter(Context context, List<getAllPostModel.DataDTO> data) {
+    public PostAdapter(Context context, List<getAllPostModel.DataDTO> data) {
         this.context = context;
         this.data = data;
     }
 
     @NonNull
     @Override
-    public RVAdapter.ViewHolder onCreateViewHolder(
+    public PostAdapter.ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
 
         mBinding = LayoutRecyclerViewItemBinding.inflate(
@@ -42,11 +42,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String path = url + data.get(position).getPictures().get(0);
+        String path = url + data.get(position).getPictures().get(0) + ".jpg";
         System.out.println("图片地址:" + path);
 
         Glide.with(context)
-                .load("http://192.168.244.1:18080/df7124a7-8e1b-4162-bb2e-5444b6b5b99f.jpg")
+                .load(path)
 //                .centerCrop()
                 .placeholder(R.color.black)
                 .override(200,200)
