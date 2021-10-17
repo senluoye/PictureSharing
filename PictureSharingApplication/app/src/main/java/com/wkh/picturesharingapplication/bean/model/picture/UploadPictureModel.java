@@ -14,6 +14,8 @@ public class UploadPictureModel implements Serializable {
     private int code;
     @JsonProperty("msg")
     private String msg;
+    @JsonProperty("error")
+    private String error;
 
     public String getData() {
         return data;
@@ -30,10 +32,6 @@ public class UploadPictureModel implements Serializable {
     public void setError(String error) {
         this.error = error;
     }
-
-    @JsonProperty("error")
-    private String error;
-
 
     public int getCode() {
         return code;

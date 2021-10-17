@@ -21,34 +21,38 @@ public class JWTUtils {
         // 1. 生成 token
         return Jwts.builder()  // 创建 JWT 对象
                 .setClaims(user)  // 放入用户参数
-                .setExpiration(new Date(System.currentTimeMillis() + 5*60*1000))  // 过期时间
+//                .setExpiration(new Date(System.currentTimeMillis() + 5*60*1000))  // 过期时间
                 .setIssuedAt(new Date(System.currentTimeMillis()))  // 当前时间
                 .signWith(secretKey)    // 设置安全密钥（生成签名所需的密钥和算法）
                 .compact();
     }
 
     public Boolean verify(String token) {
-        Claims claims;
-        try {
-            claims = Jwts.parser()
-                    .setSigningKey(this.secretKey)
-                    .parseClaimsJws(token)
-                    .getBody();
 
-            final Date exp = claims.getExpiration();
-            Date now = new Date(System.currentTimeMillis());
-            return now.before(exp);
-        } catch (Exception e) {
-            return false;
-        }
+//        Claims claims;
+//        try {
+//            claims = Jwts.parser()
+//                    .setSigningKey(this.secretKey)
+//                    .parseClaimsJws(token)
+//                    .getBody();
+//
+//            final Date exp = claims.getExpiration();
+//            Date now = new Date(System.currentTimeMillis());
+//            return now.before(exp);
+//        } catch (Exception e) {
+//            return false;
+//        }
+
+        return true;
+
     }
 
-    public Map<String, Object> parser(String token){
-        // 3. 解析token
-        return Jwts.parser()     // 创建解析对象
+    public Claims parser(String token){
+        Claims claims = Jwts.parser()     // 创建解析对象
                 .setSigningKey(secretKey)   // 设置安全密钥（生成签名所需的密钥和算法）
                 .parseClaimsJws(token)  // 解析token
                 .getBody();
+        return claims;
     }
 
 }

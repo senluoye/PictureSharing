@@ -1,7 +1,9 @@
 package com.wkh.picturesharingapplication.http;
 
+import com.wkh.picturesharingapplication.bean.entity.Post;
 import com.wkh.picturesharingapplication.bean.model.picture.UploadPictureModel;
 import com.wkh.picturesharingapplication.bean.model.post.PostSpaceModel;
+import com.wkh.picturesharingapplication.bean.model.post.getAllPostModel;
 import com.wkh.picturesharingapplication.bean.model.user.LoginModel;
 import com.wkh.picturesharingapplication.bean.entity.User;
 
@@ -44,17 +46,21 @@ public interface RetrofitRequest {
      */
     @POST("/api/picture")
     @Multipart
-    Call<UploadPictureModel> upLoadPicture(@Part MultipartBody.Part file);
+    Call<UploadPictureModel> upLoadPicture(@Header("token") String token, @Part MultipartBody.Part file);
 
     /**
      * 发布动态
-     * @param token 令牌
-     * @param content 动态内容
-     * @param pictures 动态中的图片
+     * @param token
+     * @param content
+     * @param pictures
      */
     @POST("/api/post")
-    @FormUrlEncoded
-    Call<PostSpaceModel> postSpace(@Header("Authorization") String token, @Field("content") String content,
-                                         @Field("pictures") List<String> pictures);
+    Call<PostSpaceModel> addPost(@Header("token") String token, @Body Post post);
 
+    /**
+     * 获取全部动态
+     * @return
+     */
+    @GET("/api/post/hello")
+    Call<getAllPostModel> getAllPost(@Header("token") String token);
 }

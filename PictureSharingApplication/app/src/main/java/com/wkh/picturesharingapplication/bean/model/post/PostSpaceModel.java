@@ -6,14 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PostSpaceModel implements Serializable
-{
-    @JsonProperty("data")
-    private DataDTO data;
+public class PostSpaceModel implements Serializable {
     @JsonProperty("code")
     private int code;
     @JsonProperty("msg")
     private String msg;
+    @JsonProperty("data")
+    private DataDTO data;
 
     public DataDTO getData()
     {
@@ -46,18 +45,15 @@ public class PostSpaceModel implements Serializable
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class DataDTO implements Serializable
-    {
+    public static class DataDTO implements Serializable {
         @JsonProperty("id")
         private String id;
 
-        public String getId()
-        {
+        public String getId() {
             return id;
         }
 
-        public void setId(String id)
-        {
+        public void setId(String id) {
             this.id = id;
         }
     }

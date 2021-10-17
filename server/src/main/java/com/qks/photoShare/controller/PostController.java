@@ -34,8 +34,9 @@ public class PostController {
     private Map<String, Object> Hello(@RequestHeader String token) {
         Map<String, Object> resultMap;
 
-        if (jwtUtils.verify(token))
+        if (jwtUtils.verify(token)){
             resultMap = myResponseUtil.getResultMap("success", null, postService.getHello());
+        }
         else
             resultMap = myResponseUtil.getResultMap("false", "验证失败，请重新登陆", null);
 
@@ -72,16 +73,25 @@ public class PostController {
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
     private Map<String, Object> addPost(@RequestHeader String token, @RequestBody Map<String, Object> map) {
+
+        System.out.println(map.toString());
+
         Map<String, Object> resultMap = new HashMap<>();
 
+        System.out.println("token:" + token);
         if (jwtUtils.verify(token)) {
-            String id = UUID.randomUUID() + "";
+            String id = UUID.randomUUID().toString();
+            System.out.println("id:" + id);
+
             String userId = jwtUtils.parser(token).get("id").toString();
+            System.out.println("userId:" + userId);
+
             String content = map.get("content").toString();
-            String pictures = map.get("pictures").toString();
+            String pictures = "/api/picture/" + map.get("pictures").toString();
             long date = new Date().getTime();
 
             if (postService.addPost(id, userId, content, pictures, date)) {
+                System.out.println("插入成功");
                 Map<String, Object> data = new HashMap<>();
                 data.put("id", id);
                 resultMap = myResponseUtil.getResultMap("success", null, data);

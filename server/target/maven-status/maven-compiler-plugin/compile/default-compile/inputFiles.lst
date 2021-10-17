@@ -36,6 +36,7 @@ F:\AllStudy\CodeAbout\Android\AndroidFinal\server\src\main\java\com\qks\photoSha
 F:\AllStudy\CodeAbout\Android\AndroidFinal\server\src\main\java\com\qks\photoShare\service\Impl\NoticeServiceImpl.java
 F:\AllStudy\CodeAbout\Android\AndroidFinal\server\src\main\java\com\qks\photoShare\config\service\TransactionManagementConfiguration.java
 F:\AllStudy\CodeAbout\Android\AndroidFinal\server\src\main\java\com\qks\photoShare\service\PostService.java
+F:\AllStudy\CodeAbout\Android\AndroidFinal\server\src\main\java\com\qks\photoShare\config\mvc\WebMvcConfigurer.java
 F:\AllStudy\CodeAbout\Android\AndroidFinal\server\src\main\java\com\qks\photoShare\service\PictureService.java
 F:\AllStudy\CodeAbout\Android\AndroidFinal\server\src\main\java\com\qks\photoShare\controller\PictureController.java
 F:\AllStudy\CodeAbout\Android\AndroidFinal\server\src\main\java\com\qks\photoShare\controller\SoftwareController.java

@@ -20,10 +20,11 @@
         <entry key="..\:/APP/AndroidProject/PictureSharingApplication/app/src/main/res/layout/loading.xml" value="0.6" />
         <entry key="..\:/APP/AndroidProject/PictureSharingApplication/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.13125" />
         <entry key="..\:/APP/AndroidProject/PictureSharingApplication/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.13125" />
-        <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/activity_main.xml" value="0.3111413043478261" />
+        <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/card_item.xml" value="0.3070652173913043" />
         <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/fragment_add.xml" value="0.34057971014492755" />
-        <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/fragment_home.xml" value="0.3111413043478261" />
+        <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/fragment_home.xml" value="0.176" />
+        <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/layout_recycler_view_item.xml" value="0.348731884057971" />
         <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/newpopuewindow.xml" value="0.34057971014492755" />
         <entry key="..\:/AllStudy/CodeAbout/Android/AndroidFinal/PictureSharingApplication/app/src/main/res/layout/popup_window.xml" value="0.34057971014492755" />
       </map>
