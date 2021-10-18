@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.wkh.picturesharingapplication.R;
 import com.wkh.picturesharingapplication.adepter.PostAdapter;
@@ -48,6 +49,7 @@ public class HomeFragment extends Fragment{
     static final int SHOW_TOAST = 3;
     FragmentHomeBinding mBinding;
     List<getAllPostModel.DataDTO> dataOnUI = new ArrayList<>();
+    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -67,18 +69,6 @@ public class HomeFragment extends Fragment{
                 case SUCCESS:
                     mAdapter.notifyDataSetChanged();
                     break;
-                case FAILURE:
-                    Toast.makeText(getActivity(), "网络连接失败，请重试", Toast.LENGTH_SHORT).show();
-                    mAdapter.notifyDataSetChanged();
-                    break;
-                case EXCEPTION:
-                    Toast.makeText(getActivity(), "网络连接出错，请检查", Toast.LENGTH_SHORT).show();
-                    mAdapter.notifyDataSetChanged();
-                    break;
-                case SHOW_TOAST:
-                    String text = msg.arg1 == 0 ? "登陆成功" : "登陆失败";
-                    Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
-                    break;
             }
         }
     };
@@ -86,12 +76,8 @@ public class HomeFragment extends Fragment{
     //初始化布局
     private void initView() {
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(
-                getActivity(), 2);
-
-
-        mBinding.rv.setLayoutManager(gridLayoutManager);
-
+        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mBinding.rv.setLayoutManager(mLayoutManager);
         mBinding.rv.addItemDecoration(new RVItemDecoration());
 
         // 创建适配器
@@ -104,6 +90,7 @@ public class HomeFragment extends Fragment{
                 .addConverterFactory(GsonConverterFactory.create()) // 设置数据解析器（Gson）
                 .build();
 
+        //直接请求数据
         GETConnectSynchronous();
     }
 
@@ -129,4 +116,9 @@ public class HomeFragment extends Fragment{
         }).start();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        dataOnUI.clear();
+    }
 }

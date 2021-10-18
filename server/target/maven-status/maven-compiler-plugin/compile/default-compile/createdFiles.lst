@@ -35,8 +35,10 @@ com\qks\photoShare\controller\PostController.class
 com\qks\photoShare\handler\GlobalExceptionHandler.class
 com\qks\photoShare\service\Impl\SoftwareServiceImpl.class
 com\qks\photoShare\dao\StarDao.class
+com\qks\photoShare\controller\testController.class
 com\qks\photoShare\service\Impl\StarServiceImpl.class
 com\qks\photoShare\util\MyResponseUtil.class
+com\qks\photoShare\config\mvc\WebMvcConfigurer.class
 com\qks\photoShare\entity\Comment.class
 com\qks\photoShare\service\StarService.class
 com\qks\photoShare\dao\CommentDao.class

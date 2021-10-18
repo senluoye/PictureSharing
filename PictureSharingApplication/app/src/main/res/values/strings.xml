@@ -11,6 +11,6 @@
     <string name="login_remember_passoword">login_remember_password</string>
 
     <string name="imgContent">简单说几句...</string>
-    <string name="url">http://10.33.25.42:18080</string>
+    <string name="url">http://10.33.18.116:18080</string>
     <string name="token">eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaTIzNDJuYXMiLCJpZCI6ImYyOWYyMjY0LTg0YTEtNDBmOS1hNGRlLTg1NTIxZGQwZTQ5MyIsImlhdCI6MTYzNDM3ODM4M30.nEpR7elezBvgEHjOY_dXs0mzj1WN2HX5WXw-GEdCkNg</string>
 </resources>

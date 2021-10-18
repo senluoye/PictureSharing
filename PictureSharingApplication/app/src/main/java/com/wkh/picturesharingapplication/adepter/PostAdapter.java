@@ -22,7 +22,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
     Context context;
     List<getAllPostModel.DataDTO> data;
-    String url = "http://10.33.25.42:18080";
 
     public PostAdapter(Context context, List<getAllPostModel.DataDTO> data) {
         this.context = context;
@@ -34,22 +33,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
     public PostAdapter.ViewHolder onCreateViewHolder(
             @NonNull ViewGroup parent, int viewType) {
 
-        mBinding = LayoutRecyclerViewItemBinding.inflate(
-                LayoutInflater.from(context), parent, false);
-
+        mBinding = LayoutRecyclerViewItemBinding.inflate(LayoutInflater.from(context), parent, false);
         return new ViewHolder(mBinding.getRoot());
+
+//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_recycler_view_item,
+//                parent, false);
+//        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String path = url + data.get(position).getPictures().get(0) + ".jpg";
+        String path = context.getString(R.string.url) + data.get(position).getPictures().get(0) + ".jpg";
         System.out.println("图片地址:" + path);
+        System.out.println("positon: " + position);
+
+//        ImageView imageView = holder.itemView.findViewById(R.id.image);
+//        imageView.getLayoutParams().height = 100 + (position % 3) * 30;
 
         Glide.with(context)
                 .load(path)
-//                .centerCrop()
                 .placeholder(R.color.black)
-                .override(200,200)
+                .override(200,100 + (position % 3) *30)
                 .into(holder.imageView);
     }
 
@@ -58,9 +62,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         return data.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = mBinding.image;
