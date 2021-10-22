@@ -40,7 +40,7 @@ public class getAllPostModel implements Serializable {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static class DataDTO implements Serializable, Comparable<getAllPostModel.DataDTO> {
+    public static class DataDTO implements Serializable {
         @JsonProperty("id")
         private String id;
         @JsonProperty("content")
@@ -49,12 +49,37 @@ public class getAllPostModel implements Serializable {
         private long date;
         @JsonProperty("userId")
         private String userId;
+        @JsonProperty("username")
+        private String username;
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
         @JsonProperty("pictures")
         private List<String> pictures;
         @JsonProperty("isStar")
         private int isStar;
 
         private int collectionCount;
+
+        @Override
+        public String toString() {
+            return "DataDTO{" +
+                    "id='" + id + '\'' +
+                    ", content='" + content + '\'' +
+                    ", date=" + date +
+                    ", userId='" + userId + '\'' +
+                    ", username='" + username + '\'' +
+                    ", pictures=" + pictures +
+                    ", isStar=" + isStar +
+                    ", collectionCount=" + collectionCount +
+                    '}';
+        }
 
         public String getId() {
             return id;
@@ -112,9 +137,5 @@ public class getAllPostModel implements Serializable {
             this.collectionCount = collectionCount;
         }
 
-        @Override
-        public int compareTo(getAllPostModel.DataDTO o) {
-            return (int)(o.getDate() - this.getDate());
-        }
     }
 }

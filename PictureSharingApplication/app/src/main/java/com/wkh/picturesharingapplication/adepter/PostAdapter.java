@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -49,20 +50,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         String path = context.getString(R.string.url) + data.get(position).getPictures().get(0) + ".jpg";
         System.out.println("图片地址:" + path);
 
-        int screenWidth = DisplayUtils.getScreenWidth(context);
-        int imageWidth = screenWidth / 2;
-        int imageHeight = (int) (imageWidth / (1.0f * sourceWidths.get(position) / sourceHeights.get(position)));
-
-        ConstraintLayout.LayoutParams layoutParams =
-                (ConstraintLayout.LayoutParams) holder.imageView.getLayoutParams();
-        layoutParams.height = imageHeight;
-        holder.imageView.setLayoutParams(layoutParams);
-
         Glide.with(context)
                 .load(path)
                 .placeholder(R.color.black)
-                .override(imageWidth, imageWidth)
+                .override(600, 600)
                 .into(holder.imageView);
+        holder.textView.setText("作者:" + data.get(position).getUsername());
     }
 
     @Override
@@ -77,9 +70,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
+        TextView textView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = mBinding.image;
+            textView = mBinding.username;
         }
     }
 }

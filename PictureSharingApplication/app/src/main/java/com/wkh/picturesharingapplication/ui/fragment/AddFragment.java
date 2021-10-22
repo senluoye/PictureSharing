@@ -66,10 +66,6 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private static final int REQUEST_IMAGE_GET = 0;
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int REQUEST_SMALL_IMAGE_CUTTING = 2;
-
-
-    String url = "http://192.168.244.1:18080";
-    String token = "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaTIzNDJuYXMiLCJpZCI6ImYyOWYyMjY0LTg0YTEtNDBmOS1hNGRlLTg1NTIxZGQwZTQ5MyIsImlhdCI6MTYzNDM3ODM4M30.nEpR7elezBvgEHjOY_dXs0mzj1WN2HX5WXw-GEdCkNg";
     Retrofit mRetrofit;
     String filePath;
     PreferenceUtils mPreferenceUtils;
@@ -113,7 +109,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         mPreferenceUtils = PreferenceUtils.getInstance();
 
         mRetrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(getActivity().getString(R.string.url))
                 .client(new OkHttpClient.Builder()
                         .callTimeout(60, TimeUnit.SECONDS)
                         .connectTimeout(10, TimeUnit.SECONDS)
@@ -181,7 +177,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 MultipartBody.Part body =
                         MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                 Response<UploadPictureModel> response =
-                        request.upLoadPicture(token, body).execute();
+                        request.upLoadPicture(getActivity().getString(R.string.token), body).execute();
 
 
                 if (response.code() == HttpURLConnection.HTTP_OK) {
@@ -193,7 +189,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                     post.setPictures(id);
 
                     Response<PostSpaceModel> postResponse =
-                            request.addPost(token, post).execute();
+                            request.addPost(getActivity().getString(R.string.token), post).execute();
 
                     System.out.println(postResponse.body().toString());
                     if (postResponse.code() == HttpURLConnection.HTTP_OK){

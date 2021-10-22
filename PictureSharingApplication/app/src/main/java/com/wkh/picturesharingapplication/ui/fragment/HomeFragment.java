@@ -46,7 +46,6 @@ public class HomeFragment extends Fragment{
     final List<Integer> collectionCounts = new ArrayList<>();
     private View rootView;//home视图
 
-    String token = "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaTIzNDJuYXMiLCJpZCI6ImYyOWYyMjY0LTg0YTEtNDBmOS1hNGRlLTg1NTIxZGQwZTQ5MyIsImlhdCI6MTYzNDM3ODM4M30.nEpR7elezBvgEHjOY_dXs0mzj1WN2HX5WXw-GEdCkNg";
     PostAdapter mAdapter;
     Retrofit mRetrofit;
     static final int SUCCESS = 0;
@@ -105,19 +104,12 @@ public class HomeFragment extends Fragment{
         new Thread(() -> {
             try {
                 RetrofitRequest request = mRetrofit.create(RetrofitRequest.class);
-                Response<getAllPostModel> response = request.getAllPost(token).execute();
+                Response<getAllPostModel> response = request.getAllPost(getActivity().getString(R.string.token)).execute();
 
                 if (response.code() == HttpURLConnection.HTTP_OK) {
-                    System.out.println("拿到的数据：" + response.body().getData());
+                    System.out.println("拿到的数据：" + response.body().getData().toString());
                     dataOnUI.addAll(response.body().getData());
-                    for (getAllPostModel.DataDTO dataDTO : dataOnUI){
-                        System.out.println("请求到的数据：" + dataDTO.getId());
-                        Response<ResponseBody> pictureResponse = request.getPicture(token, dataDTO.getId()).execute();
-                        int[] temp = DecodeUtils.getSourceDimensions(pictureResponse.body().bytes());
-                        System.out.println("数据：" + temp.toString());
-                        sourceWidths.add(temp[0]);
-                        sourceHeights.add(temp[1]);
-                    }
+
                     handler.sendEmptyMessage(SUCCESS);
                 } else {
                     handler.sendEmptyMessage(FAILURE);

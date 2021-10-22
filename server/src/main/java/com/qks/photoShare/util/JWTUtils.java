@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.ObjectStreamClass;
 import java.util.Date;
 import java.util.Map;
 @Component
@@ -29,30 +30,20 @@ public class JWTUtils {
 
     public Boolean verify(String token) {
 
-//        Claims claims;
-//        try {
-//            claims = Jwts.parser()
-//                    .setSigningKey(this.secretKey)
-//                    .parseClaimsJws(token)
-//                    .getBody();
-//
-//            final Date exp = claims.getExpiration();
-//            Date now = new Date(System.currentTimeMillis());
-//            return now.before(exp);
-//        } catch (Exception e) {
-//            return false;
-//        }
+        Claims claims =  Jwts.parser()
+                    .setSigningKey(this.secretKey)
+                    .parseClaimsJws(token)
+                    .getBody();
+        System.out.println("申请的用户为：" + claims.get("id").toString());
 
         return true;
-
     }
 
     public Claims parser(String token){
-        Claims claims = Jwts.parser()     // 创建解析对象
+        return Jwts.parser()     // 创建解析对象
                 .setSigningKey(secretKey)   // 设置安全密钥（生成签名所需的密钥和算法）
                 .parseClaimsJws(token)  // 解析token
                 .getBody();
-        return claims;
     }
 
 }
