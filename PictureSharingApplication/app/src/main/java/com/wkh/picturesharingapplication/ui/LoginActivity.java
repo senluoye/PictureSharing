@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -16,15 +20,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.wkh.picturesharingapplication.R;
 import com.wkh.picturesharingapplication.bean.entity.User;
+import com.wkh.picturesharingapplication.bean.model.user.LoginModel;
+import com.wkh.picturesharingapplication.http.RetrofitRequest;
 
+import org.jetbrains.annotations.NotNull;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private ApiService apiService;
     private Boolean bPwdSwitch = false;
@@ -33,18 +46,40 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private CheckBox cbRememberPwd;
     private TextView Sign;
 
+    static final int SUCCESS = 0;
+    static final int FAILURE = 1;
+    static final int ACTION_REGISTER = 2;
+    private static final String TAG = "LoginActivity";
+
+    final Handler handler = new Handler(Looper.getMainLooper())
+    {
+        @Override
+        public void handleMessage(
+                @NonNull
+                        Message msg)
+        {
+            switch (msg.what)
+            {
+                case SUCCESS:
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    finish();
+                    break;
+                case FAILURE:
+                    Toast.makeText(LoginActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("/api/user/login/")
+                .baseUrl("http://10.33.109.181:18080")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        apiService = retrofit.create(ApiService.class);
-
 
         final ImageView ivPwdSwitch = findViewById(R.id.iv_pwd_switch);
         etPwd = findViewById(R.id.et_pwd);
@@ -53,13 +88,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Button btLogin = findViewById(R.id.bt_login);
         Sign=findViewById(R.id.tv_sign_up);
 
-        Sign.setOnClickListener(this);
+//        Sign.setOnClickListener(this);
         Sign.setOnClickListener(view -> {
             Intent intent=new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, ACTION_REGISTER);
         });
 
-        btLogin.setOnClickListener(this);
+//        btLogin.setOnClickListener(this);
         btLogin.setOnClickListener(view -> {
 
             String spFileName = getResources()
@@ -71,33 +106,55 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String rememberPasswordKey = getResources()
                     .getString(R.string.login_remember_passoword);
 
-
             SharedPreferences spFile = getSharedPreferences(
                     spFileName,
                     Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = spFile.edit();
 
-            if(cbRememberPwd.isChecked()) {
-                String password = etPwd.getText().toString();
-                String account = etUsername.getText().toString();
-
-                editor.putString(accountKey, account);
-                editor.putString(passwordKey, password);
-                editor.putBoolean(rememberPasswordKey, true);
-                editor.apply();
-            } else {
-                editor.remove(accountKey);
-                editor.remove(passwordKey);
-                editor.remove(rememberPasswordKey);
-                editor.apply();
-            }
-
             final User user= new User();
             user.setName(etUsername.getText().toString());
             user.setPassword(etPwd.getText().toString());
 
-            //判断账号密码是否正确
+            retrofit.create(RetrofitRequest.class).login(etUsername.getText().toString(), etPwd.getText().toString())
+            .enqueue(new Callback<LoginModel>()
+            {
+                @Override
+                public void onResponse(
+                        @NotNull
+                                Call<LoginModel> call,
+                        @NotNull
+                                Response<LoginModel> response)
+                {
+                    if(cbRememberPwd.isChecked()) {
+                        String password = etPwd.getText().toString();
+                        String account = etUsername.getText().toString();
 
+                        editor.putString(accountKey, account);
+                        editor.putString(passwordKey, password);
+                        editor.putBoolean(rememberPasswordKey, true);
+                    } else {
+                        editor.remove(accountKey);
+                        editor.remove(passwordKey);
+                        editor.remove(rememberPasswordKey);
+                    }
+                    editor.apply();
+                    handler.sendEmptyMessage(SUCCESS);
+                }
+
+                @Override
+                public void onFailure(
+                        @NotNull
+                                Call<LoginModel> call,
+                        @NotNull
+                                Throwable t)
+                {
+                    Log.e(TAG, "onFailure: ", t);
+                    Message message = Message.obtain();
+                    message.what = FAILURE;
+                    message.obj = t.getMessage();
+                    handler.sendMessage(message);
+                }
+            });
         });
 
         ivPwdSwitch.setOnClickListener(view -> {
@@ -151,36 +208,50 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Toast.makeText(LoginActivity.this, s, Toast.LENGTH_SHORT).show();
     }
 
+//    @Override
+//    public void onClick(View v) {
+//        String spFileName = getResources()
+//                .getString(R.string.shared_preferences_file_name);
+//        String accountKey = getResources()
+//                .getString(R.string.login_account_name);
+//        String passwordKey =  getResources()
+//                .getString(R.string.login_password);
+//        String rememberPasswordKey = getResources()
+//                .getString(R.string.login_remember_passoword);
+//
+//        SharedPreferences spFile = getSharedPreferences(
+//                spFileName,
+//                Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = spFile.edit();
+//
+//         if(cbRememberPwd.isChecked()) {
+//            String password = etPwd.getText().toString();
+//            String account = etUsername.getText().toString();
+//
+//            editor.putString(accountKey, account);
+//            editor.putString(passwordKey, password);
+//            editor.putBoolean(rememberPasswordKey, true);
+//            editor.apply();
+//        } else {
+//            editor.remove(accountKey);
+//            editor.remove(passwordKey);
+//            editor.remove(rememberPasswordKey);
+//            editor.apply();
+//        }
+//
+//    }
+
+
     @Override
-    public void onClick(View v) {
-        String spFileName = getResources()
-                .getString(R.string.shared_preferences_file_name);
-        String accountKey = getResources()
-                .getString(R.string.login_account_name);
-        String passwordKey =  getResources()
-                .getString(R.string.login_password);
-        String rememberPasswordKey = getResources()
-                .getString(R.string.login_remember_passoword);
-
-        SharedPreferences spFile = getSharedPreferences(
-                spFileName,
-                Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = spFile.edit();
-
-         if(cbRememberPwd.isChecked()) {
-            String password = etPwd.getText().toString();
-            String account = etUsername.getText().toString();
-
-            editor.putString(accountKey, account);
-            editor.putString(passwordKey, password);
-            editor.putBoolean(rememberPasswordKey, true);
-            editor.apply();
-        } else {
-            editor.remove(accountKey);
-            editor.remove(passwordKey);
-            editor.remove(rememberPasswordKey);
-            editor.apply();
+    protected void onActivityResult(int requestCode, int resultCode,
+            @Nullable
+                    Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK)
+        {
+            etUsername.setText(data.getStringExtra("username"));
+            etPwd.setText(data.getStringExtra("password"));
         }
-
     }
 }
