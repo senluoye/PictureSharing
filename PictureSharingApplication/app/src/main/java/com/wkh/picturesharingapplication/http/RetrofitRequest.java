@@ -10,6 +10,7 @@ import com.wkh.picturesharingapplication.bean.entity.User;
 import java.util.List;
 
 import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -19,6 +20,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 
 public interface RetrofitRequest {
 
@@ -63,4 +65,13 @@ public interface RetrofitRequest {
      */
     @GET("/api/post/hello")
     Call<getAllPostModel> getAllPost(@Header("token") String token);
+
+    /**
+     * 获取一张图片
+     * @param token
+     * @param pictureId
+     */
+    @GET("/{id}")
+    Call<ResponseBody> getPicture(@Header("token") String token, @Path("id") String pictureId);
+
 }

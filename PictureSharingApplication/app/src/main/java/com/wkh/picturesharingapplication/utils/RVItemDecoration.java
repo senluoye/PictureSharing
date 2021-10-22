@@ -6,6 +6,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * item的一些设置
+ */
 public class RVItemDecoration extends RecyclerView.ItemDecoration {
 
     /**

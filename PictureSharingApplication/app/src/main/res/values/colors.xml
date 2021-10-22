@@ -14,5 +14,6 @@
     <color name="borderColorBase">#DCDFE6</color>
     <color name="textColor">#666666</color>
     <color name="colorInfo">#909399</color>
+    <color name="Grey300">#e0e0e0</color>
 
 </resources>

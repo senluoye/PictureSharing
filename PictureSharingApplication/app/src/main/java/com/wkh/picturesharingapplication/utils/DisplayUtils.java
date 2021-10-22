@@ -3,6 +3,9 @@ package com.wkh.picturesharingapplication.utils;
 import android.content.Context;
 import android.view.WindowManager;
 
+/**
+ * 展示相关的工具类
+ */
 public class DisplayUtils {
 
     public static int dip2px(Context context, float dipValue) {

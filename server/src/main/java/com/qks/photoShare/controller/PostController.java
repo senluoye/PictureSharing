@@ -34,9 +34,8 @@ public class PostController {
     private Map<String, Object> Hello(@RequestHeader String token) {
         Map<String, Object> resultMap;
 
-        if (jwtUtils.verify(token)){
+        if (jwtUtils.verify(token))
             resultMap = myResponseUtil.getResultMap("success", null, postService.getHello());
-        }
         else
             resultMap = myResponseUtil.getResultMap("false", "验证失败，请重新登陆", null);
 

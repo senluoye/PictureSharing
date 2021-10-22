@@ -22,12 +22,15 @@ import com.wkh.picturesharingapplication.adepter.PostAdapter;
 import com.wkh.picturesharingapplication.bean.model.post.getAllPostModel;
 import com.wkh.picturesharingapplication.databinding.FragmentHomeBinding;
 import com.wkh.picturesharingapplication.http.RetrofitRequest;
+import com.wkh.picturesharingapplication.utils.DecodeUtils;
 import com.wkh.picturesharingapplication.utils.RVItemDecoration;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -38,6 +41,9 @@ public class HomeFragment extends Fragment{
     private RecyclerView lvCardList;
     private Context context = null;
 
+    final List<Integer> sourceWidths = new ArrayList<>();
+    final List<Integer> sourceHeights = new ArrayList<>();
+    final List<Integer> collectionCounts = new ArrayList<>();
     private View rootView;//home视图
 
     String token = "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiYWRtaTIzNDJuYXMiLCJpZCI6ImYyOWYyMjY0LTg0YTEtNDBmOS1hNGRlLTg1NTIxZGQwZTQ5MyIsImlhdCI6MTYzNDM3ODM4M30.nEpR7elezBvgEHjOY_dXs0mzj1WN2HX5WXw-GEdCkNg";
@@ -81,7 +87,7 @@ public class HomeFragment extends Fragment{
         mBinding.rv.addItemDecoration(new RVItemDecoration());
 
         // 创建适配器
-        mAdapter = new PostAdapter(getActivity(), dataOnUI);
+        mAdapter = new PostAdapter(getActivity(), dataOnUI, sourceWidths, sourceHeights);
         mBinding.rv.setAdapter(mAdapter);
 
         // 初始化Retrofit
@@ -104,6 +110,14 @@ public class HomeFragment extends Fragment{
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     System.out.println("拿到的数据：" + response.body().getData());
                     dataOnUI.addAll(response.body().getData());
+                    for (getAllPostModel.DataDTO dataDTO : dataOnUI){
+                        System.out.println("请求到的数据：" + dataDTO.getId());
+                        Response<ResponseBody> pictureResponse = request.getPicture(token, dataDTO.getId()).execute();
+                        int[] temp = DecodeUtils.getSourceDimensions(pictureResponse.body().bytes());
+                        System.out.println("数据：" + temp.toString());
+                        sourceWidths.add(temp[0]);
+                        sourceHeights.add(temp[1]);
+                    }
                     handler.sendEmptyMessage(SUCCESS);
                 } else {
                     handler.sendEmptyMessage(FAILURE);
@@ -120,5 +134,7 @@ public class HomeFragment extends Fragment{
     public void onDestroyView() {
         super.onDestroyView();
         dataOnUI.clear();
+        sourceHeights.clear();
+        sourceWidths.clear();
     }
 }
