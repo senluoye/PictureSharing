@@ -111,9 +111,8 @@ public class LoginActivity extends AppCompatActivity {
             user.setPassword(etPwd.getText().toString());
 
             retrofit.create(RetrofitRequest.class)
-                    .login(etUsername.getText().toString(), etPwd.getText().toString())
+                    .login(user)
                     .enqueue(new Callback<LoginModel>() {
-
                         @Override
                         public void onResponse(@NotNull Call<LoginModel> call,
                                                @NotNull Response<LoginModel> response) {
@@ -133,11 +132,16 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             editor.apply();
 
-//                            String token = response.body().getData().getToken();
-                            System.out.println(response.body().toString());
+                            String token = response.body().getData().getToken();
+                            String userId = response.body().getData().getUser().getId();
+                            String userName = response.body().getData().getUser().getName();
+
                             PreferenceUtils.init(getApplication());
                             PreferenceUtils preferenceUtils= PreferenceUtils.getInstance();
-//                            preferenceUtils.saveToken(token);
+                            preferenceUtils.saveToken(token);
+                            preferenceUtils.saveUserId(userId);
+                            preferenceUtils.saveUsername(userName);
+
                             System.out.println("储存的数据:" + preferenceUtils.getToken());
                             handler.sendEmptyMessage(SUCCESS);
                         }

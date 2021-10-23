@@ -1,11 +1,15 @@
 package com.wkh.picturesharingapplication.adepter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -19,10 +23,12 @@ import com.wkh.picturesharingapplication.bean.model.star.StarModel;
 import com.wkh.picturesharingapplication.databinding.LayoutRecyclerViewItemBinding;
 import com.wkh.picturesharingapplication.http.RetrofitRequest;
 import com.wkh.picturesharingapplication.utils.DisplayUtils;
+import com.wkh.picturesharingapplication.utils.PreferenceUtils;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import okhttp3.ResponseBody;
 import retrofit2.Response;
@@ -37,6 +43,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     List<Integer> sourceWidths;
     List<Integer> sourceHeights;
     Retrofit retrofit;
+    static final int SUCCESS = 1;
+
+    Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            Toast.makeText(context, "点赞成功", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     public PostAdapter(Context context, List<getAllPostModel.DataDTO> data, List<Integer> sourceWidths, List<Integer> sourceHeights) {
         this.context = context;
@@ -74,17 +88,25 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         holder.star.setOnClickListener(v -> new Thread(() -> {
             try {
+                PreferenceUtils preferenceUtils = PreferenceUtils.getInstance();
+
                 Star star = new Star();
-//                star.setUserId();
+                star.setUserId(preferenceUtils.getUserId());
+                star.setPostId(data.get(position).getId());
 
                 RetrofitRequest request = retrofit.create(RetrofitRequest.class);
                 Response<StarModel> response =
                         request.star(holder.imageView.getContext().getString(R.string.token), star).execute();
 
                 if (response.code() == HttpURLConnection.HTTP_OK) {
+                    System.out.println("点赞成功");
 
+                    Message msg = handler.obtainMessage();
+                    msg.obj = holder.imageView;
+                    holder.star.setImageResource(R.drawable.stared);
+                    handler.sendMessage(msg);
                 } else {
-
+                    System.out.println("点赞失败");
                 }
             }
             catch (Exception e) {

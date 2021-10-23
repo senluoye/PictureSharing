@@ -55,6 +55,7 @@ public class UserController {
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     private Map<String, Object> Login(@RequestBody Map<String, Object> map) {
+        System.out.println("map" + map.toString());
         Map<String, Object> resultMap;
         Map<String, Object> userMap = new HashMap<>();
         String name = map.get("name").toString();
@@ -66,6 +67,7 @@ public class UserController {
             userMap.put("name", name);
             Map<String, Object> data = new HashMap<>();
             data.put("token", jwtUtils.createToken(userMap));
+            data.put("user", user);
             resultMap = myResponseUtil.getResultMap("success", null, data);
         } else
             resultMap = myResponseUtil.getResultMap("false", "该用户不存在或密码错误", null);

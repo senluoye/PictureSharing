@@ -2,6 +2,7 @@ package com.wkh.picturesharingapplication.bean.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.wkh.picturesharingapplication.bean.entity.User;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -21,24 +22,9 @@ public class LoginModel implements Serializable {
     @JsonProperty("data")
     private DataDTO data;
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    private static class DataDTO implements Serializable{
-
-        @JsonProperty("token")
-        private String token;
-
-        public String getToken() {
-            return token;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-    }
-
     @Override
     public String toString() {
-        return "MyResponse{" +
+        return "LoginModel{" +
                 "msg='" + msg + '\'' +
                 ", code=" + code +
                 ", error='" + error + '\'' +
@@ -76,5 +62,57 @@ public class LoginModel implements Serializable {
 
     public void setData(DataDTO data) {
         this.data = data;
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class DataDTO implements Serializable{
+
+        @JsonProperty("token")
+        private String token;
+
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        @JsonProperty("user")
+        private UserDataDTO user;
+
+        public UserDataDTO getUser() {
+            return user;
+        }
+
+        public void setUser(UserDataDTO user) {
+            this.user = user;
+        }
+
+        @JsonIgnoreProperties(ignoreUnknown = true)
+        public static class UserDataDTO implements Serializable{
+
+            @JsonProperty("id")
+            private String id;
+
+            @JsonProperty("name")
+            private String name;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
     }
 }
