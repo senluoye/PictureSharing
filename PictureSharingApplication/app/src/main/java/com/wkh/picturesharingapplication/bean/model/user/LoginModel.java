@@ -22,11 +22,18 @@ public class LoginModel implements Serializable {
     private DataDTO data;
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    private class DataDTO implements Serializable{
+    private static class DataDTO implements Serializable{
 
         @JsonProperty("token")
         private String token;
 
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
     }
 
     @Override

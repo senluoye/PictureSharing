@@ -28,6 +28,7 @@ import com.wkh.picturesharingapplication.R;
 import com.wkh.picturesharingapplication.bean.entity.User;
 import com.wkh.picturesharingapplication.bean.model.user.LoginModel;
 import com.wkh.picturesharingapplication.http.RetrofitRequest;
+import com.wkh.picturesharingapplication.utils.PreferenceUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -131,6 +132,13 @@ public class LoginActivity extends AppCompatActivity {
                                 editor.remove(rememberPasswordKey);
                             }
                             editor.apply();
+
+//                            String token = response.body().getData().getToken();
+                            System.out.println(response.body().toString());
+                            PreferenceUtils.init(getApplication());
+                            PreferenceUtils preferenceUtils= PreferenceUtils.getInstance();
+//                            preferenceUtils.saveToken(token);
+                            System.out.println("储存的数据:" + preferenceUtils.getToken());
                             handler.sendEmptyMessage(SUCCESS);
                         }
 

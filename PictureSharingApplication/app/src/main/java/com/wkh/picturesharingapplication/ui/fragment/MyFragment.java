@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import com.wkh.picturesharingapplication.R;
 import com.wkh.picturesharingapplication.databinding.FragmentHomeBinding;
 import com.wkh.picturesharingapplication.databinding.FragmentMyBinding;
+import com.wkh.picturesharingapplication.utils.PreferenceUtils;
 
 import org.w3c.dom.Text;
 
@@ -64,5 +65,8 @@ public class MyFragment extends Fragment {
         name = bundle.getString("name");
         password = bundle.getString("password");
         mBinding.accountName.setText(name);
+
+        PreferenceUtils preferenceUtils = PreferenceUtils.getInstance();
+        System.out.println("拿到的token：" + preferenceUtils.getToken());
     }
 }

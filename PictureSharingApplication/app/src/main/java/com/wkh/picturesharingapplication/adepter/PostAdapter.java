@@ -52,7 +52,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         mBinding = LayoutRecyclerViewItemBinding.inflate(LayoutInflater.from(context), parent, false);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(String.valueOf(R.string.url))
+                .baseUrl(context.getString(R.string.url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
