@@ -1,9 +1,11 @@
 package com.wkh.picturesharingapplication.http;
 
 import com.wkh.picturesharingapplication.bean.entity.Post;
+import com.wkh.picturesharingapplication.bean.entity.Star;
 import com.wkh.picturesharingapplication.bean.model.picture.UploadPictureModel;
 import com.wkh.picturesharingapplication.bean.model.post.PostSpaceModel;
 import com.wkh.picturesharingapplication.bean.model.post.getAllPostModel;
+import com.wkh.picturesharingapplication.bean.model.star.StarModel;
 import com.wkh.picturesharingapplication.bean.model.user.LoginModel;
 import com.wkh.picturesharingapplication.bean.entity.User;
 
@@ -59,6 +61,16 @@ public interface RetrofitRequest {
      */
     @POST("/api/post")
     Call<PostSpaceModel> addPost(@Header("token") String token, @Body Post post);
+
+
+    /**
+     * 点赞动态
+     * @param token
+     * @param star
+     * @return
+     */
+    @POST("/api/star")
+    Call<StarModel> star(@Header("token") String token, @Body Star star);
 
     /**
      * 获取全部动态

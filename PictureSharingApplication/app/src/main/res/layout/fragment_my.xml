@@ -30,10 +30,9 @@
         <LinearLayout
             android:id="@+id/ll_name"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="29dp"
             android:layout_toRightOf="@id/iv_avatar"
             android:orientation="horizontal">
 
@@ -41,7 +40,7 @@
                 android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="用户名："
+                android:text="欢迎您："
                 android:textColor="#353535"
                 android:textSize="16sp" />
 
@@ -53,31 +52,6 @@
                 android:textSize="16sp" />
 
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_fxid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="17dp"
-            android:layout_marginBottom="19dp"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:text="账号:"
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/account_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="58dp"
-            android:layout_marginBottom="7dp"
-            android:layout_toRightOf="@id/iv_avatar"
-
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
-
 
     </RelativeLayout>
 

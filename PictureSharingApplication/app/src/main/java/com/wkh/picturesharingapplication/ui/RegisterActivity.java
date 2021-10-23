@@ -35,7 +35,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterActivity extends AppCompatActivity {
     private Retrofit retrofit;
-    private ApiService apiService;
     private EditText Username;
     private EditText Password;
     private EditText Confirm;
@@ -46,15 +45,10 @@ public class RegisterActivity extends AppCompatActivity {
     static final int FAILURE = 1;
     private static final String TAG = "RegisterActivity";
 
-    final Handler handler = new Handler(Looper.getMainLooper())
-    {
+    final Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(
-                @NonNull
-                        Message msg)
-        {
-            switch (msg.what)
-            {
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
                 case SUCCESS:
                     Intent intent = new Intent();
                     intent.putExtra("username", Username.getText().toString());
@@ -86,51 +80,36 @@ public class RegisterActivity extends AppCompatActivity {
         signup=findViewById(R.id.signup);
         cancel=findViewById(R.id.cancel);
 
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        cancel.setOnClickListener(v -> finish());
 
-        signup.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                if (!Password.getText().toString().equals(Confirm.getText().toString()))
-                {
-                    Toast.makeText(RegisterActivity.this, "两次输入的密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                final User user= new User();
-                user.setName(Username.getText().toString());
-                user.setPassword(Password.getText().toString());
-                retrofit.create(RetrofitRequest.class).register(user).enqueue(new Callback<LoginModel>()
-                {
-                    @Override
-                    public void onResponse(
-                            @NotNull
-                                    Call<LoginModel> call,
-                            @NotNull
-                                    Response<LoginModel> response)
-                    {
-                        handler.sendEmptyMessage(SUCCESS);
-                    }
-
-                    @Override
-                    public void onFailure(
-                            @NotNull
-                                    Call<LoginModel> call,
-                            @NotNull
-                                    Throwable t)
-                    {
-                        Log.e(TAG, "onFailure: ", t);
-                        Message message = Message.obtain();
-                        message.what = FAILURE;
-                        message.obj = t.getMessage();
-                        handler.sendMessage(message);
-                    }
-                });
+        signup.setOnClickListener(view -> {
+            if (!Password.getText().toString().equals(Confirm.getText().toString())) {
+                Toast.makeText(RegisterActivity.this,
+                        "两次输入的密码不一致，请重新输入",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
+            final User user= new User();
+            user.setName(Username.getText().toString());
+            user.setPassword(Password.getText().toString());
+            retrofit.create(RetrofitRequest.class)
+                    .register(user)
+                    .enqueue(new Callback<LoginModel>() {
+                        @Override
+                        public void onResponse(@NotNull Call<LoginModel> call,
+                                               @NotNull Response<LoginModel> response) {
+                            handler.sendEmptyMessage(SUCCESS);
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull Call<LoginModel> call, @NotNull Throwable t) {
+                            Log.e(TAG, "onFailure: ", t);
+                            Message message = Message.obtain();
+                            message.what = FAILURE;
+                            message.obj = t.getMessage();
+                            handler.sendMessage(message);
+                        }
+            });
         });
     }
 }

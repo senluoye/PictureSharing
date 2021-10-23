@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment{
     final List<Integer> sourceWidths = new ArrayList<>();
     final List<Integer> sourceHeights = new ArrayList<>();
     final List<Integer> collectionCounts = new ArrayList<>();
-    private View rootView;//home视图
 
     PostAdapter mAdapter;
     Retrofit mRetrofit;
@@ -104,7 +103,8 @@ public class HomeFragment extends Fragment{
         new Thread(() -> {
             try {
                 RetrofitRequest request = mRetrofit.create(RetrofitRequest.class);
-                Response<getAllPostModel> response = request.getAllPost(getActivity().getString(R.string.token)).execute();
+                Response<getAllPostModel> response =
+                        request.getAllPost(getActivity().getString(R.string.token)).execute();
 
                 if (response.code() == HttpURLConnection.HTTP_OK) {
                     System.out.println("拿到的数据：" + response.body().getData().toString());
@@ -121,6 +121,8 @@ public class HomeFragment extends Fragment{
             }
         }).start();
     }
+
+
 
     @Override
     public void onDestroyView() {

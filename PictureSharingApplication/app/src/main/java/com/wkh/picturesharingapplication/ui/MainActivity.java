@@ -67,6 +67,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int RESULT_LOAD_IMAGE = 1;
     private int RESULT_CAMERA_IMAGE = 2;
+    Intent intent;
+    private String name;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAddFragment = new AddFragment();
         mMyFragment = new MyFragment();
 
+        intent = getIntent();
+        name = intent.getStringExtra("name");
+        password = intent.getStringExtra("password");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putString("password", password);
+        mMyFragment.setArguments(bundle);
     }
 
     //按钮特效
