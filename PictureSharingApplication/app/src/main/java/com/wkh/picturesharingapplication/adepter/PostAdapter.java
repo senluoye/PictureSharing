@@ -75,7 +75,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         holder.star.setOnClickListener(v -> new Thread(() -> {
             try {
                 Star star = new Star();
-                star.setUserId();
+//                star.setUserId();
 
                 RetrofitRequest request = retrofit.create(RetrofitRequest.class);
                 Response<StarModel> response =
