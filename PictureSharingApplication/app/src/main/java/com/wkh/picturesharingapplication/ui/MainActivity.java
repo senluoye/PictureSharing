@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getSupportFragmentManager().beginTransaction().replace(R.id.main_body, mAddFragment).commit();
                 break;
             case R.id.bottom_bar_3_btn:
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_body,mMyFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_body, mMyFragment).commit();
                 break;
         }
     }

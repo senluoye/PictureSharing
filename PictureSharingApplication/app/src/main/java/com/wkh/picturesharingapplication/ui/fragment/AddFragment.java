@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -22,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -32,6 +35,8 @@ import com.wkh.picturesharingapplication.bean.entity.Post;
 import com.wkh.picturesharingapplication.bean.model.picture.UploadPictureModel;
 import com.wkh.picturesharingapplication.bean.model.post.PostSpaceModel;
 import com.wkh.picturesharingapplication.http.RetrofitRequest;
+import com.wkh.picturesharingapplication.ui.LoginActivity;
+import com.wkh.picturesharingapplication.ui.MainActivity;
 import com.wkh.picturesharingapplication.ui.widget.PhotoPopupWindow;
 import com.wkh.picturesharingapplication.utils.PreferenceUtils;
 
@@ -58,6 +63,8 @@ import retrofit2.http.POST;
 
 public class AddFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = "AddFragment";
+    private static final int SUCCESS = 1;
+    private static final int FAILURE = 2;
     private ImageView mImage;
     private EditText mEditText;
     //发布视图
@@ -70,6 +77,24 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     String filePath;
     PreferenceUtils mPreferenceUtils;
     HomeFragment mHomeFragment;
+
+    final Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            switch (msg.what) {
+                case SUCCESS:
+                    Toast.makeText(getActivity(), "发布成功", Toast.LENGTH_SHORT).show();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_body, mHomeFragment)
+                            .commit();
+                    break;
+                case FAILURE:
+                    Toast.makeText(getActivity(), (String) msg.obj, Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }
+    };
 
     public AddFragment() {
     }
@@ -102,6 +127,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         mEditText = rootView.findViewById(R.id.add_content);
         mImage = rootView.findViewById(R.id.add_img);
         Button mButton = rootView.findViewById(R.id.add_button);
+        mHomeFragment = new HomeFragment();
+
         //设置点击事件
         mImage.setOnClickListener(this);
         mButton.setOnClickListener(this);
@@ -198,10 +225,19 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                         String postId = postResponse.body().getData().getId();
                         System.out.println("Data:" + postResponse.body().getData());
                         System.out.println("这是postId：" + postId);
-                    }
 
-//                    Toast.makeText(getActivity(), "提交成功", Toast.LENGTH_SHORT).show();
-//                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_body, mHomeFragment).commit();
+                        handler.sendEmptyMessage(SUCCESS);
+                    } else {
+                        Message message = Message.obtain();
+                        message.what = FAILURE;
+                        message.obj = "上传图片失败";
+                        handler.sendMessage(message);
+                    }
+                } else {
+                    Message message = Message.obtain();
+                    message.what = FAILURE;
+                    message.obj = "上传图片失败";
+                    handler.sendMessage(message);
                 }
             }
             catch (Exception e) {
