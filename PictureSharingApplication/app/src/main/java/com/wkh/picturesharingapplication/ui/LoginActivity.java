@@ -154,6 +154,20 @@ public class LoginActivity extends AppCompatActivity {
                                 message.obj = "账号不存在或密码错误";
                                 handler.sendMessage(message);
                             }
+                            editor.apply();
+
+                            String token = response.body().getData().getToken();
+                            String userId = response.body().getData().getUser().getId();
+                            String userName = response.body().getData().getUser().getName();
+
+                            PreferenceUtils.init(getApplication());
+                            PreferenceUtils preferenceUtils= PreferenceUtils.getInstance();
+                            preferenceUtils.saveToken(token);
+                            preferenceUtils.saveUserId(userId);
+                            preferenceUtils.saveUsername(userName);
+
+                            System.out.println("储存的数据:" + preferenceUtils.getToken());
+                            handler.sendEmptyMessage(SUCCESS);
                         }
 
                         @Override
