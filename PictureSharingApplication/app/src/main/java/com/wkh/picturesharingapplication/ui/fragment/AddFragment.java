@@ -75,7 +75,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private static final int REQUEST_SMALL_IMAGE_CUTTING = 2;
     Retrofit mRetrofit;
     String filePath;
-    PreferenceUtils mPreferenceUtils;
+    PreferenceUtils preferenceUtils;
     HomeFragment mHomeFragment;
 
     final Handler handler = new Handler(Looper.getMainLooper()) {
@@ -133,7 +133,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
         mImage.setOnClickListener(this);
         mButton.setOnClickListener(this);
 
-        mPreferenceUtils = PreferenceUtils.getInstance();
+        preferenceUtils = PreferenceUtils.getInstance();
 
         mRetrofit = new Retrofit.Builder()
                 .baseUrl(getActivity().getString(R.string.url))
@@ -204,7 +204,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                 MultipartBody.Part body =
                         MultipartBody.Part.createFormData("file", file.getName(), requestFile);
                 Response<UploadPictureModel> response =
-                        request.upLoadPicture(getActivity().getString(R.string.token), body).execute();
+                        request.upLoadPicture(preferenceUtils.getToken(), body).execute();
 
 
                 if (response.code() == HttpURLConnection.HTTP_OK) {
@@ -216,7 +216,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
                     post.setPictures(id);
 
                     Response<PostSpaceModel> postResponse =
-                            request.addPost(getActivity().getString(R.string.token), post).execute();
+                            request.addPost(preferenceUtils.getToken(), post).execute();
 
                     System.out.println(postResponse.body().toString());
                     if (postResponse.code() == HttpURLConnection.HTTP_OK){

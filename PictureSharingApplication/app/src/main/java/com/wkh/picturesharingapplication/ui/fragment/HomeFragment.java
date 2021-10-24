@@ -73,6 +73,9 @@ public class HomeFragment extends Fragment{
                 case SUCCESS:
                     mAdapter.notifyDataSetChanged();
                     break;
+                case FAILURE:
+                    Toast.makeText(getActivity(), "数据请求失败", Toast.LENGTH_SHORT).show();
+                    break;
             }
         }
     };

@@ -87,7 +87,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
-            android:src="@drawable/dianzan"
+            android:src="@drawable/star"
             android:visibility="visible" />
 
         <ImageView
@@ -137,104 +137,6 @@
         android:paddingLeft="12dp">
 
 
-        <ImageView
-            android:id="@+id/iv_xiangce"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/anquan" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_xiangce"
-            android:text="账号与安全"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/re_aboutwe"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:clickable="true"
-        android:paddingLeft="12dp">
-
-        <ImageView
-            android:id="@+id/iv_shoucang"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/guanyu" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_shoucang"
-            android:text="关于我们"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/re_help"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="0dp"
-
-        android:clickable="true"
-        android:paddingLeft="12dp">
-
-
-        <ImageView
-            android:id="@+id/iv_money_bag"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/bangzhu" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_money_bag"
-            android:text="帮助与反馈"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
 
     </RelativeLayout>
 
@@ -242,7 +144,7 @@
         android:id="@+id/tuichu"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="150dp"
 
         android:clickable="true"
         android:paddingLeft="12dp">
@@ -254,24 +156,18 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            android:src="@drawable/shezhi" />
+            android:src="@drawable/exit" />
 
         <TextView
+            android:id="@+id/exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/iv_setting"
-            android:text="设置"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/iv_setting"
+            android:text="退出"
             android:textColor="#353535"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
+            android:textSize="16sp"/>
 
     </RelativeLayout>
 
