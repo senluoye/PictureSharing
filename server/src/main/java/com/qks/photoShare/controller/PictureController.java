@@ -46,8 +46,6 @@ public class PictureController {
     @RequestMapping(value = "", method = RequestMethod.POST)
     private Map<String, Object> addPicture(@RequestParam("file") MultipartFile file, @RequestHeader String token) throws IOException {
 
-//        System.out.println(token);
-
         String pictureId = UUID.randomUUID().toString();
         try {
             BufferedOutputStream out = new BufferedOutputStream(

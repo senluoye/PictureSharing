@@ -28,6 +28,7 @@ import com.wkh.picturesharingapplication.R;
 import com.wkh.picturesharingapplication.bean.entity.User;
 import com.wkh.picturesharingapplication.bean.model.user.LoginModel;
 import com.wkh.picturesharingapplication.http.RetrofitRequest;
+import com.wkh.picturesharingapplication.utils.PreferenceUtils;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         public void handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case SUCCESS:
+                    Toast.makeText(LoginActivity.this, "登陆成功", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(LoginActivity.this, MainActivity.class)
                                     .putExtra("name", n)
                                     .putExtra("password", p));
@@ -110,28 +112,48 @@ public class LoginActivity extends AppCompatActivity {
             user.setPassword(etPwd.getText().toString());
 
             retrofit.create(RetrofitRequest.class)
-                    .login(etUsername.getText().toString(), etPwd.getText().toString())
+                    .login(user)
                     .enqueue(new Callback<LoginModel>() {
-
                         @Override
                         public void onResponse(@NotNull Call<LoginModel> call,
                                                @NotNull Response<LoginModel> response) {
-                            String password = etPwd.getText().toString();
-                            String account = etUsername.getText().toString();
-                            n = account;
-                            p = password;
 
-                            if(cbRememberPwd.isChecked()) {
-                                editor.putString(accountKey, account);
-                                editor.putString(passwordKey, password);
-                                editor.putBoolean(rememberPasswordKey, true);
+                            LoginModel loginModel = response.body();
+                            if (loginModel.getMsg().equals("success")){
+                                String password = etPwd.getText().toString();
+                                String account = etUsername.getText().toString();
+                                n = account;
+                                p = password;
+
+                                if(cbRememberPwd.isChecked()) {
+                                    editor.putString(accountKey, account);
+                                    editor.putString(passwordKey, password);
+                                    editor.putBoolean(rememberPasswordKey, true);
+                                } else {
+                                    editor.remove(accountKey);
+                                    editor.remove(passwordKey);
+                                    editor.remove(rememberPasswordKey);
+                                }
+                                editor.apply();
+
+                                String token = response.body().getData().getToken();
+                                String userId = response.body().getData().getUser().getId();
+                                String userName = response.body().getData().getUser().getName();
+
+                                PreferenceUtils.init(getApplication());
+                                PreferenceUtils preferenceUtils= PreferenceUtils.getInstance();
+                                preferenceUtils.saveToken(token);
+                                preferenceUtils.saveUserId(userId);
+                                preferenceUtils.saveUsername(userName);
+
+                                System.out.println("储存的数据:" + preferenceUtils.getToken());
+                                handler.sendEmptyMessage(SUCCESS);
                             } else {
-                                editor.remove(accountKey);
-                                editor.remove(passwordKey);
-                                editor.remove(rememberPasswordKey);
+                                Message message = Message.obtain();
+                                message.what = FAILURE;
+                                message.obj = "账号不存在或密码错误";
+                                handler.sendMessage(message);
                             }
-                            editor.apply();
-                            handler.sendEmptyMessage(SUCCESS);
                         }
 
                         @Override

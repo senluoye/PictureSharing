@@ -40,7 +40,7 @@
                 android:adjustViewBounds="true"
                 android:maxWidth="150dp"
                 android:maxHeight="150dp"
-                android:src="@drawable/add_image" />
+                android:src="@drawable/picture" />
 
             <Button
                 android:id="@+id/add_button"

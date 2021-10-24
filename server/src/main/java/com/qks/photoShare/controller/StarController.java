@@ -52,10 +52,11 @@ public class StarController {
             String userId = map.get("userId").toString();
             String postId = map.get("postId").toString();
             String myId = jwtUtils.parser(token).get("id").toString();
-
+            System.out.println("信息：" + userId +"\n"+ postId);
             if (postService.findPostById(postId) != null){
                 Star star = starService.getStarByPostAndUserId(postId, userId);
                 if (star == null){ // 没有点赞
+                    System.out.println("点赞");
                     String id = UUID.randomUUID() + "";
                     if (starService.addStar(id, postId, userId)){
                         noticeService.addNotice(myId, userId, postId, "点赞了你的动态");
@@ -68,6 +69,7 @@ public class StarController {
                         resultMap = myResponseUtil.getResultMap("success", null, "addStar", dataMap);
                     }
                 } else {
+                    System.out.println("取消点赞");
                     String id = starService.deleteStar(postId, userId);
                     if (id != null){
                         Map<String, Object> dataMap = new HashMap<>();

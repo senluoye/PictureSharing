@@ -19,6 +19,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -32,8 +33,9 @@ public interface RetrofitRequest {
      * @param user
      * @return
      */
-    @GET("/api/user/login")
-    Call<LoginModel> login(@Query("name") String name, @Query("password") String password);
+    @Headers({"Content-Type: application/json","Accept: application/json"})
+    @POST("/api/user/login")
+    Call<LoginModel> login(@Body User user);
 
     /**
      * 注册
